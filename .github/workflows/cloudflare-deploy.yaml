@@ -1,4 +1,4 @@
-name: Deploy Worker
+name: Deploy Cloudflare Worker
 on:
   push:
     branches:
