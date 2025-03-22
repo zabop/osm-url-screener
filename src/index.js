@@ -27,11 +27,7 @@ async function fetchData(relId) {
 		console.log(data);
 		const elements = data.elements || [];
 		const level0ids = elements.map((e) => `${e.type[0]}${e.id}`);
-		const urls = elements
-			.map((e) => e.tags['contact:website'])
-			.map((value) => ({ value, sort: Math.random() })) // shuffle urls
-			.sort((a, b) => a.sort - b.sort) // shuffle urls
-			.map(({ value }) => value); // shuffle urls
+		const urls = elements.map((e) => e.tags['contact:website']);
 
 		let resp404 = {};
 		let respNon404 = {};
