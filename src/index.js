@@ -8,17 +8,24 @@
  * Learn more at https://developers.cloudflare.com/workers/
  */
 
-const axios = require('axios');
-
-const OVERPASS_URL = 'http://overpass-api.de/api/interpreter';
+const OVERPASS_URL = 'http://overpass-api.de/api/interpreter?data=';
 
 async function fetchData(relId) {
 	try {
 		const query = `[out:json][timeout:50];area(${3600000000 + relId})->.searchArea;nwr["contact:website"~".*"](area.searchArea);out body;`;
 
-		const resp = await axios.post(OVERPASS_URL, new URLSearchParams({ data: query }));
-		const elements = resp.data.elements;
+		console.log('query:');
+		console.log(query);
+		console.log('query^');
 
+		const resp = await fetch(OVERPASS_URL + query, {
+			method: 'GET',
+		});
+
+		const data = await resp.json();
+		console.log('data:');
+		console.log(data);
+		const elements = data.elements || [];
 		const level0ids = elements.map((e) => `${e.type[0]}${e.id}`);
 		const urls = elements.map((e) => e.tags['contact:website']);
 
@@ -27,7 +34,8 @@ async function fetchData(relId) {
 
 		for (let i = 0; i < urls.length; i++) {
 			try {
-				const response = await axios.head(urls[i], { maxRedirects: 3, timeout: 3000 });
+				const response = await fetch(urls[i], { method: 'GET', redirect: 'follow', signal: AbortSignal.timeout(5000) });
+				console.log(urls[i], response.status);
 				if (response.status === 404) {
 					resp404[level0ids[i]] = urls[i];
 				} else {
@@ -38,10 +46,10 @@ async function fetchData(relId) {
 			}
 		}
 
-		const res = { resp404, respNon404 };
-		return res;
+		return { resp404, respNon404 };
 	} catch (error) {
 		console.error('Error fetching data:', error);
+		return { error: error.message };
 	}
 }
 
@@ -49,12 +57,13 @@ export default {
 	async fetch(request, env, ctx) {
 		const url = new URL(request.url);
 		const relId = parseInt(url.pathname.replace('/', ''), 10);
-
-		const data = await fetchData(relId);
-		return new Response(JSON.stringify(data), {
-			headers: {
-				'content-type': 'application/json',
-			},
-		});
+		if (isNaN(relId)) {
+			return new Response('hello world');
+		} else {
+			const data = await fetchData(relId);
+			return new Response(JSON.stringify(data), {
+				headers: { 'Content-Type': 'application/json' },
+			});
+		}
 	},
 };
