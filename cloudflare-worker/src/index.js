@@ -38,11 +38,11 @@ async function fetchData(relId) {
 		for (let i = 0; i < urls.length; i++) {
 			try {
 				const response = await fetch(urls[i], { method: 'GET', redirect: 'manual', signal: AbortSignal.timeout(5000) });
+				const responseText = await response.text();
 				if (
 					response.status === 404 &&
-					(await response.text()).toLowerCase().includes('404') &&
-					((await response.text()).toLowerCase().includes('page not found') ||
-						(await response.text()).toLowerCase().includes('url was not found'))
+					responseText.toLowerCase().includes('404') &&
+					(responseText.toLowerCase().includes('page not found') || responseText.toLowerCase().includes('url was not found'))
 				) {
 					resp404[level0ids[i]] = urls[i];
 				} else {
