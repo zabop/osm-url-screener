@@ -31,7 +31,7 @@ async function fetchData(relId) {
 
 		let resp404 = {};
 		let respNon404 = {};
-		let error = {};
+		let errorInCheck = {};
 
 		for (let i = 0; i < urls.length; i++) {
 			try {
@@ -43,11 +43,11 @@ async function fetchData(relId) {
 					respNon404[level0ids[i]] = urls[i];
 				}
 			} catch (error) {
-				error[level0ids[i]] = urls[i];
+				errorInCheck[level0ids[i]] = urls[i];
 			}
 		}
 
-		return { resp404, respNon404, error };
+		return { resp404, respNon404, errorInCheck };
 	} catch (error) {
 		console.error('Error fetching data:', error);
 		return { error: error.message };
