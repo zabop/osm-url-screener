@@ -14,7 +14,7 @@ async function fetchData(relId) {
 	try {
 		const query = `[out:json][timeout:50];area(${
 			3600000000 + relId
-		})->.searchArea;nwr["contact:website"~"^https://www.*"](area.searchArea);out body;`;
+		})->.searchArea;nwr["contact:website"~"^https://www[^;]*"](area.searchArea);out body;`;
 
 		console.log('query:');
 		console.log(query);
