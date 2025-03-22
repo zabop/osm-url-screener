@@ -10,12 +10,12 @@
 
 const axios = require('axios');
 
-const query = '[out:json][timeout:50];' + 'area(3601690324)->.searchArea;' + 'nwr["contact:website"~".*"](area.searchArea);' + 'out body;';
-
 const OVERPASS_URL = 'http://overpass-api.de/api/interpreter';
 
-async function fetchData() {
+async function fetchData(relId) {
 	try {
+		const query = `[out:json][timeout:50];area(${3600000000 + relId})->.searchArea;nwr["contact:website"~".*"](area.searchArea);out body;`;
+
 		const resp = await axios.post(OVERPASS_URL, new URLSearchParams({ data: query }));
 		const elements = resp.data.elements;
 
@@ -47,7 +47,10 @@ async function fetchData() {
 
 export default {
 	async fetch(request, env, ctx) {
-		const data = await fetchData();
+		const url = new URL(request.url);
+		const relId = parseInt(url.pathname.replace('/', ''), 10);
+
+		const data = await fetchData(relId);
 		return new Response(JSON.stringify(data), {
 			headers: {
 				'content-type': 'application/json',
