@@ -44,8 +44,7 @@ async function fetchData(relId) {
 		for (let i = 0; i < urls.length; i++) {
 			try {
 				const response = await fetch(urls[i], { method: 'GET', redirect: 'follow', signal: AbortSignal.timeout(5000) });
-				console.log(urls[i], response.status);
-				if (response.status === 404) {
+				if (response.status === 404 && (await response.text()).includes('404')) {
 					resp404[level0ids[i]] = urls[i];
 				} else {
 					respNon404[level0ids[i]] = urls[i];
