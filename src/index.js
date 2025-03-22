@@ -25,7 +25,11 @@ async function fetchData(relId) {
 		const data = await resp.json();
 		console.log('data:');
 		console.log(data);
-		const elements = data.elements || [];
+		const elements =
+			data.elements
+				.map((value) => ({ value, sort: Math.random() })) // shuffle elements
+				.sort((a, b) => a.sort - b.sort) // shuffle elements
+				.map(({ value }) => value) || []; // shuffle elements
 		const level0ids = elements.map((e) => `${e.type[0]}${e.id}`);
 		const urls = elements.map((e) => e.tags['contact:website']);
 
