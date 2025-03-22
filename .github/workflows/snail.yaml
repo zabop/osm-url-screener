@@ -1,4 +1,4 @@
-name: Periodically Run Snail Script
+name: Periodic Snail
 
 on:
   schedule:
