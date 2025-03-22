@@ -12,7 +12,9 @@ const OVERPASS_URL = 'http://overpass-api.de/api/interpreter?data=';
 
 async function fetchData(relId) {
 	try {
-		const query = `[out:json][timeout:50];area(${3600000000 + relId})->.searchArea;nwr["contact:website"~".*"](area.searchArea);out body;`;
+		const query = `[out:json][timeout:50];area(${
+			3600000000 + relId
+		})->.searchArea;nwr["contact:website"~"^https://.*"](area.searchArea);out body;`;
 
 		console.log('query:');
 		console.log(query);
