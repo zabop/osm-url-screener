@@ -16,17 +16,11 @@ async function fetchData(relId) {
 			3600000000 + relId
 		})->.searchArea;nwr["contact:website"~"^https://www[^;]*$"](area.searchArea);out body;`;
 
-		console.log('query:');
-		console.log(query);
-		console.log('query^');
-
 		const resp = await fetch(OVERPASS_URL + query, {
 			method: 'GET',
 		});
 
 		const data = await resp.json();
-		console.log('data:');
-		console.log(data);
 		const elements =
 			data.elements
 				.map((value) => ({ value, sort: Math.random() })) // shuffle elements
