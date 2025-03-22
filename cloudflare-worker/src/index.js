@@ -41,7 +41,8 @@ async function fetchData(relId) {
 				if (
 					response.status === 404 &&
 					(await response.text()).toLowerCase().includes('404') &&
-					(await response.text()).toLowerCase().includes('page not found')
+					((await response.text()).toLowerCase().includes('page not found') ||
+						(await response.text()).toLowerCase().includes('url was not found'))
 				) {
 					resp404[level0ids[i]] = urls[i];
 				} else {
