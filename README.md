@@ -1,3 +1,3 @@
 # osm-url-screener
 
-workflow trigger
+Followed: https://developers.cloudflare.com/workers/get-started/guide/.
