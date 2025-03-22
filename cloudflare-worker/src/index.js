@@ -38,7 +38,11 @@ async function fetchData(relId) {
 		for (let i = 0; i < urls.length; i++) {
 			try {
 				const response = await fetch(urls[i], { method: 'GET', redirect: 'manual', signal: AbortSignal.timeout(5000) });
-				if (response.status === 404 && (await response.text()).includes('404')) {
+				if (
+					response.status === 404 &&
+					(await response.text()).toLowerCase().includes('404') &&
+					(await response.text()).toLowerCase().includes('page not found')
+				) {
 					resp404[level0ids[i]] = urls[i];
 				} else {
 					respNon404[level0ids[i]] = urls[i];
