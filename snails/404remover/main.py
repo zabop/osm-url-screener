@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 from requests_oauthlib import OAuth2Session
 import requests
 import random
@@ -224,3 +225,6 @@ with api.Changeset(
             print("Website removed in the meantime")
         else:
             api.RelationUpdate(f)
+=======
+requests==2.32.3
+>>>>>>> Stashed changes
