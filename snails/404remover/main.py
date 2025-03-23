@@ -10,7 +10,7 @@ token = {
     "token_type": "Bearer",
 }
 
-client_id = "PEZADPwzYY225tBhbTvI_uqdZpvdYMZzDhulVCG0Fyg"
+client_id = os.environ["OSM_CLIENT_ID"]
 oauth_session = OAuth2Session(token=token)
 api = osmapi.OsmApi(api="https://api.openstreetmap.org", session=oauth_session)
 
