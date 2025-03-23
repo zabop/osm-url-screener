@@ -3,9 +3,10 @@ import requests
 import random
 import osmapi
 import json
+import os
 
 token = {
-    "access_token": "MQtTb5U9BslGtnFoApnSPwgKoqEsFgCTKVWWXw2fyYo",
+    "access_token": os.environ["OSM_ACCESS_TOKEN"],
     "token_type": "Bearer",
 }
 
