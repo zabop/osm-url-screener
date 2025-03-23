@@ -19,3 +19,4 @@ jobs:
       - run: python snails/404remover/main.py
         env:
           OSM_ACCESS_TOKEN: ${{ secrets.OSM_ACCESS_TOKEN }}
+          OSM_CLIENT_ID: ${{ secrets.OSM_CLIENT_ID }}
