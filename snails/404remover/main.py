@@ -40,7 +40,7 @@ def get_nwr(relid):
     return nodes, ways, relations
 
 
-for _ in range(10):
+for _ in range(20):
     nodes, ways, relations = get_nwr(random.choice(localities))
     if len(nodes) + len(ways) + len(relations) > 0:
         break
