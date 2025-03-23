@@ -184,7 +184,7 @@ def get_nwr(relid):
 
 for _ in range(10):
     nodes, ways, relations = get_nwr(random.choice(localities))
-    if len(nodes) + len(ways) + len(relations) > 1:
+    if len(nodes) + len(ways) + len(relations) > 0:
         break
 else:
     print("No 404s found")
