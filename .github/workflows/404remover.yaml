@@ -15,5 +15,5 @@ jobs:
           python-version: '3.13'
       - run: |
           python -m pip install --upgrade pip
-          pip install -r snail/requirements.txt
-      - run: python snail/main.py
+          pip install -r snails/404remover/requirements.txt
+      - run: python snails/404remover/main.py
