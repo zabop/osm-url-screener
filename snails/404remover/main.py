@@ -14,7 +14,7 @@ client_id = os.environ["OSM_CLIENT_ID"]
 oauth_session = OAuth2Session(token=token)
 api = osmapi.OsmApi(api="https://api.openstreetmap.org", session=oauth_session)
 
-with open("localities.json") as f:
+with open("snails/404remover/localities.json") as f:
     localities = json.load(f)
 
 
